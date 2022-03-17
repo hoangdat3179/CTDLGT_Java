@@ -1,31 +1,28 @@
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class _290_Word_Pattern {
-    public static boolean wordPattern(String pattern, String s) {
-        HashMap<Character, String> myMap = new HashMap<Character, String>();
-        Set<String> word_set = new HashSet<String>();
-        Set<Character> pattern_set = new HashSet<Character>();
-        String[] words = s.split(" ");
-        for (String word : words) {
-            word_set.add(word);
-        }
-        for (char c : pattern.toCharArray()) {
-            pattern_set.add(c);
-        }
-        if (words.length != pattern.length() || word_set.size() != pattern_set.size()) {
-            return false;
-        }
-        for (int i = 0; i < words.length; i++) {
-            if (myMap.containsKey(pattern.charAt(i))) {
-                if (!myMap.get(pattern.charAt(i)).equals(words[i])) {
+    public static boolean wordPattern(String s, String t) {
+        HashMap<Character, String> H = new HashMap<>();
+        String[] tArr = t.split(" ");
+
+        if(s.length() != tArr.length) return false;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ci = s.charAt(i);
+            String ti = tArr[i];
+            if(H.containsKey(ci)){
+                String dich = H.get(ci);
+                if(dich.equals(ti) == false){
                     return false;
                 }
-            } else {
-                myMap.put(pattern.charAt(i), words[i]);
+            }else{
+                if(H.containsValue(ti)){
+                    return false;
+                }
+                H.put(ci, ti);
             }
         }
+        
         return true;
     }
 
